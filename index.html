@@ -3,164 +3,304 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Central Dade Arts Expansion 2026</title>
+<title>Arts Access Miami — Central Region Alliance Grant Allocation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 <style>
   :root {
-    --bg: #0f1117;
-    --surface: #1a1d27;
-    --surface2: #242836;
-    --border: #2e3345;
-    --text: #e4e6f0;
-    --text-dim: #8b90a5;
-    --accent: #6c63ff;
-    --accent2: #00d4aa;
-    --accent3: #ff6b8a;
-    --accent4: #ffb347;
-    --accent5: #4fc3f7;
-    --accent6: #ab47bc;
-    --music: #6c63ff;
-    --dance: #ff6b8a;
-    --theater: #ffb347;
-    --visual: #00d4aa;
-    --poetry: #ab47bc;
-    --orchestra: #4fc3f7;
-    --choir: #e91e63;
-    --general: #78909c;
+    --indigo: #2D2B7F;
+    --indigo-deep: #1E1C5E;
+    --indigo-light: #4A48A0;
+    --indigo-pale: #E8E7F6;
+    --indigo-wash: #F4F3FB;
+    --lime: #C5E83D;
+    --lime-dark: #9BBF1A;
+    --lime-soft: #E8F5A1;
+    --orange: #F5A623;
+    --orange-soft: #FFF3E0;
+    --coral: #FF6B6B;
+    --coral-soft: #FFE8E8;
+    --teal: #00B4A6;
+    --teal-soft: #E0F7F5;
+    --sky: #4FACFE;
+    --sky-soft: #E3F2FD;
+    --plum: #9C27B0;
+    --plum-soft: #F3E5F5;
+    --rose: #E91E63;
+    --rose-soft: #FCE4EC;
+
+    --bg: #FAFBFE;
+    --surface: #FFFFFF;
+    --surface-alt: #F5F4FA;
+    --border: #E4E3EF;
+    --border-light: #EEEDFA;
+    --text: #1A1A2E;
+    --text-secondary: #5C5B7A;
+    --text-muted: #9897B3;
+    --radius: 16px;
+    --radius-sm: 10px;
+    --shadow-sm: 0 1px 3px rgba(45,43,127,0.06);
+    --shadow-md: 0 4px 16px rgba(45,43,127,0.08);
+    --shadow-lg: 0 8px 32px rgba(45,43,127,0.10);
+    --shadow-xl: 0 16px 48px rgba(45,43,127,0.12);
+
+    --music: #2D2B7F;
+    --dance: #E91E63;
+    --theater: #F5A623;
+    --visual: #00B4A6;
+    --poetry: #9C27B0;
+    --orchestra: #4FACFE;
+    --choir: #FF6B6B;
+    --general: #78909C;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
-    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-family: 'DM Sans', sans-serif;
     background: var(--bg);
     color: var(--text);
     line-height: 1.6;
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
   }
 
-  .container { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
+  .container { max-width: 1440px; margin: 0 auto; padding: 0 32px; }
 
-  /* Header */
-  .hero {
-    padding: 60px 0 40px;
-    text-align: center;
-    background: linear-gradient(180deg, rgba(108,99,255,0.08) 0%, transparent 100%);
-    border-bottom: 1px solid var(--border);
+  /* ===== HEADER ===== */
+  .header {
+    background: var(--indigo);
+    position: relative;
+    overflow: hidden;
   }
-  .hero h1 {
-    font-size: 2.8rem;
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -60%;
+    right: -10%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(197,232,61,0.15) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: -40%;
+    left: -5%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(79,172,254,0.1) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    position: relative;
+    z-index: 1;
+  }
+  .logo-area {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .logo-area img {
+    height: 48px;
+    width: auto;
+    border-radius: 8px;
+  }
+  .logo-text {
+    color: rgba(255,255,255,0.6);
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .header-badge {
+    background: var(--lime);
+    color: var(--indigo-deep);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 0.75rem;
+    padding: 6px 16px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .header-main {
+    padding: 48px 0 56px;
+    position: relative;
+    z-index: 1;
+  }
+  .header-label {
+    display: inline-block;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.82rem;
     font-weight: 700;
-    letter-spacing: -1px;
-    background: linear-gradient(135deg, #6c63ff, #00d4aa);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-bottom: 8px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--lime);
+    margin-bottom: 16px;
   }
-  .hero .subtitle {
+  .header-title {
+    font-family: 'Nunito', sans-serif;
+    font-size: 3.2rem;
+    font-weight: 900;
+    color: #FFFFFF;
+    line-height: 1.15;
+    max-width: 700px;
+    margin-bottom: 12px;
+  }
+  .header-subtitle {
     font-size: 1.1rem;
-    color: var(--text-dim);
-    margin-bottom: 40px;
+    color: rgba(255,255,255,0.6);
+    max-width: 520px;
+    line-height: 1.7;
   }
 
-  /* KPI Cards */
+  /* ===== KPI STRIP ===== */
+  .kpi-strip {
+    position: relative;
+    z-index: 2;
+    margin-top: -40px;
+    margin-bottom: 48px;
+  }
   .kpi-row {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 20px;
-    margin-bottom: 48px;
   }
   .kpi {
     background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius);
     padding: 28px 24px;
     text-align: center;
-    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: var(--shadow-lg);
+    transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
   }
+  .kpi::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--indigo);
+    border-radius: var(--radius) var(--radius) 0 0;
+  }
+  .kpi:nth-child(2)::before { background: var(--lime-dark); }
+  .kpi:nth-child(3)::before { background: var(--teal); }
+  .kpi:nth-child(4)::before { background: var(--orange); }
   .kpi:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 32px rgba(108,99,255,0.15);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-xl);
   }
   .kpi .value {
-    font-size: 2.4rem;
-    font-weight: 700;
-    color: var(--accent);
+    font-family: 'Nunito', sans-serif;
+    font-size: 2.6rem;
+    font-weight: 900;
+    color: var(--indigo);
     line-height: 1.2;
   }
-  .kpi:nth-child(2) .value { color: var(--accent2); }
-  .kpi:nth-child(3) .value { color: var(--accent3); }
-  .kpi:nth-child(4) .value { color: var(--accent4); }
+  .kpi:nth-child(2) .value { color: var(--lime-dark); }
+  .kpi:nth-child(3) .value { color: var(--teal); }
+  .kpi:nth-child(4) .value { color: var(--orange); }
   .kpi .label {
-    font-size: 0.85rem;
-    color: var(--text-dim);
+    font-size: 0.78rem;
+    color: var(--text-muted);
     text-transform: uppercase;
     letter-spacing: 1.5px;
+    font-weight: 600;
     margin-top: 8px;
   }
   .kpi .detail {
-    font-size: 0.8rem;
-    color: var(--text-dim);
+    font-size: 0.78rem;
+    color: var(--text-muted);
     margin-top: 4px;
-    opacity: 0.7;
   }
 
-  /* Section */
-  .section {
-    margin-bottom: 48px;
-  }
-  .section-title {
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin-bottom: 24px;
-    padding-bottom: 12px;
-    border-bottom: 2px solid var(--border);
+  /* ===== SECTIONS ===== */
+  .section { margin-bottom: 56px; }
+  .section-header {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 14px;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--border-light);
   }
-  .section-title .dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--accent);
-    display: inline-block;
+  .section-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+  .section-icon.blue { background: var(--indigo-pale); color: var(--indigo); }
+  .section-icon.green { background: var(--teal-soft); color: var(--teal); }
+  .section-icon.coral { background: var(--coral-soft); color: var(--coral); }
+  .section-icon.orange { background: var(--orange-soft); color: var(--orange); }
+  .section-title {
+    font-family: 'Nunito', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--text);
   }
 
-  /* Chart containers */
+  /* ===== CHARTS ===== */
   .chart-container {
     background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 32px;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius);
+    padding: 28px;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow 0.3s ease;
   }
+  .chart-container:hover { box-shadow: var(--shadow-md); }
   .chart-row {
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 5fr 3fr;
     gap: 24px;
   }
   .chart-row.even { grid-template-columns: 1fr 1fr; }
+  .chart-container canvas { max-height: 500px; }
 
-  /* School Program Grid */
+  /* ===== SCHOOL GRID ===== */
   .grid-wrap {
     overflow-x: auto;
     background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 24px;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius);
+    padding: 4px;
+    box-shadow: var(--shadow-sm);
   }
   .program-grid {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
-    font-size: 0.78rem;
+    font-size: 0.82rem;
   }
   .program-grid th {
-    background: var(--surface2);
-    padding: 12px 10px;
+    background: var(--indigo);
+    color: rgba(255,255,255,0.9);
+    padding: 14px 14px;
     text-align: left;
-    font-weight: 600;
-    color: var(--text-dim);
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.8px;
     font-size: 0.7rem;
@@ -169,145 +309,61 @@
     white-space: nowrap;
   }
   .program-grid th:first-child {
-    border-radius: 8px 0 0 0;
-    min-width: 220px;
+    border-radius: 12px 0 0 0;
+    min-width: 50px;
   }
-  .program-grid th:last-child { border-radius: 0 8px 0 0; }
+  .program-grid th:last-child { border-radius: 0 12px 0 0; }
   .program-grid td {
-    padding: 10px;
-    border-bottom: 1px solid var(--border);
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border-light);
     vertical-align: middle;
   }
   .program-grid tr:last-child td { border-bottom: none; }
-  .program-grid tr:hover td { background: rgba(108,99,255,0.04); }
+  .program-grid tbody tr {
+    transition: background 0.15s ease;
+  }
+  .program-grid tbody tr:hover td { background: var(--indigo-wash); }
   .program-grid .school-name {
     font-weight: 600;
     color: var(--text);
-    display: flex;
-    align-items: center;
-    gap: 8px;
   }
   .school-type {
-    font-size: 0.65rem;
-    padding: 2px 8px;
+    font-size: 0.68rem;
+    padding: 3px 10px;
     border-radius: 20px;
-    font-weight: 500;
+    font-weight: 700;
     white-space: nowrap;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
   }
-  .type-elem { background: rgba(0,212,170,0.15); color: var(--accent2); }
-  .type-k8 { background: rgba(108,99,255,0.15); color: var(--accent); }
-  .type-middle { background: rgba(255,179,71,0.15); color: var(--accent4); }
-  .type-high { background: rgba(255,107,138,0.15); color: var(--accent3); }
+  .type-elem { background: var(--teal-soft); color: var(--teal); }
+  .type-k8 { background: var(--indigo-pale); color: var(--indigo); }
+  .type-middle { background: var(--orange-soft); color: var(--orange); }
+  .type-high { background: var(--coral-soft); color: var(--coral); }
 
   .program-pill {
     display: inline-block;
-    padding: 4px 10px;
+    padding: 4px 12px;
     border-radius: 20px;
     font-size: 0.72rem;
-    font-weight: 500;
+    font-weight: 600;
     margin: 2px;
     white-space: nowrap;
+    transition: transform 0.15s ease;
   }
-  .pill-music { background: rgba(108,99,255,0.15); color: #9590ff; }
-  .pill-dance { background: rgba(255,107,138,0.15); color: #ff8da6; }
-  .pill-theater { background: rgba(255,179,71,0.15); color: #ffc76b; }
-  .pill-visual { background: rgba(0,212,170,0.15); color: #33e0be; }
-  .pill-poetry { background: rgba(171,71,188,0.15); color: #c77dda; }
-  .pill-orchestra { background: rgba(79,195,247,0.15); color: #7dd4f9; }
-  .pill-choir { background: rgba(233,30,99,0.15); color: #f06292; }
-  .pill-general { background: rgba(120,144,156,0.15); color: #a0b0b8; }
+  .program-pill:hover { transform: scale(1.03); }
+  .pill-music { background: var(--indigo-pale); color: var(--indigo); }
+  .pill-dance { background: var(--rose-soft); color: var(--rose); }
+  .pill-theater { background: var(--orange-soft); color: #C77C00; }
+  .pill-visual { background: var(--teal-soft); color: #008A7F; }
+  .pill-poetry { background: var(--plum-soft); color: var(--plum); }
+  .pill-orchestra { background: var(--sky-soft); color: #1976D2; }
+  .pill-choir { background: var(--coral-soft); color: var(--coral); }
+  .pill-general { background: #ECEFF1; color: #546E7A; }
 
-  .empty-cell { color: var(--text-dim); opacity: 0.3; }
+  .empty-cell { color: var(--text-muted); opacity: 0.4; }
 
-  /* Org Cards */
-  .org-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 16px;
-  }
-  .org-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 24px;
-    transition: transform 0.2s, box-shadow 0.2s;
-    cursor: default;
-  }
-  .org-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 24px rgba(0,0,0,0.3);
-  }
-  .org-card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 12px;
-  }
-  .org-card-name {
-    font-size: 1rem;
-    font-weight: 700;
-  }
-  .org-card-amount {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--accent2);
-  }
-  .org-card-full {
-    font-size: 0.78rem;
-    color: var(--text-dim);
-    margin-bottom: 12px;
-  }
-  .org-card-stats {
-    display: flex;
-    gap: 16px;
-    margin-bottom: 12px;
-  }
-  .org-stat {
-    font-size: 0.78rem;
-    color: var(--text-dim);
-  }
-  .org-stat strong {
-    color: var(--text);
-    font-size: 1rem;
-  }
-  .org-card-schools {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
-  }
-  .org-school-tag {
-    font-size: 0.68rem;
-    padding: 3px 8px;
-    border-radius: 12px;
-    background: var(--surface2);
-    color: var(--text-dim);
-    border: 1px solid var(--border);
-  }
-  .org-card-expansion {
-    margin-top: 10px;
-    padding-top: 10px;
-    border-top: 1px solid var(--border);
-  }
-  .expansion-bar {
-    height: 6px;
-    border-radius: 3px;
-    background: var(--surface2);
-    overflow: hidden;
-    margin-top: 6px;
-  }
-  .expansion-fill {
-    height: 100%;
-    border-radius: 3px;
-    background: linear-gradient(90deg, var(--accent), var(--accent2));
-  }
-  .expansion-label {
-    font-size: 0.72rem;
-    color: var(--text-dim);
-    display: flex;
-    justify-content: space-between;
-  }
-
-  /* Legend */
+  /* ===== LEGEND ===== */
   .legend {
     display: flex;
     flex-wrap: wrap;
@@ -317,105 +373,272 @@
   .legend-item {
     display: flex;
     align-items: center;
-    gap: 6px;
-    font-size: 0.78rem;
-    color: var(--text-dim);
+    gap: 8px;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    font-weight: 500;
   }
   .legend-dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 4px;
+    width: 14px;
+    height: 14px;
+    border-radius: 5px;
   }
 
-  /* Footer */
-  .footer {
-    text-align: center;
-    padding: 40px 0;
-    color: var(--text-dim);
+  /* ===== ORG CARDS ===== */
+  .org-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 20px;
+  }
+  .org-card {
+    background: var(--surface);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius);
+    padding: 24px;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease;
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+  }
+  .org-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--indigo);
+    border-radius: var(--radius) 0 0 var(--radius);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .org-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+  }
+  .org-card:hover::after { opacity: 1; }
+  .org-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+  }
+  .org-card-name {
+    font-family: 'Nunito', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--indigo);
+  }
+  .org-card-amount {
+    font-family: 'Nunito', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--teal);
+  }
+  .org-card-full {
     font-size: 0.8rem;
-    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    margin-bottom: 14px;
+  }
+  .org-card-stats {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 14px;
+  }
+  .org-stat {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+  .org-stat strong {
+    color: var(--text);
+    font-size: 1.05rem;
+    font-weight: 700;
+  }
+  .org-card-detail {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-bottom: 14px;
+    line-height: 1.6;
+  }
+  .org-card-schools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  .org-school-tag {
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 12px;
+    background: var(--surface-alt);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-light);
+  }
+  .org-card-expansion {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border-light);
+  }
+  .expansion-bar {
+    height: 6px;
+    border-radius: 3px;
+    background: var(--surface-alt);
+    overflow: hidden;
+    margin-top: 8px;
+  }
+  .expansion-fill {
+    height: 100%;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--indigo), var(--indigo-light));
+  }
+  .expansion-label {
+    font-size: 0.74rem;
+    color: var(--text-muted);
+    display: flex;
+    justify-content: space-between;
+    font-weight: 500;
   }
 
-  /* Responsive */
-  @media (max-width: 900px) {
-    .kpi-row { grid-template-columns: repeat(2, 1fr); }
-    .chart-row, .chart-row.even { grid-template-columns: 1fr; }
-    .hero h1 { font-size: 2rem; }
-  }
-  @media (max-width: 600px) {
-    .kpi-row { grid-template-columns: 1fr; }
-    .org-cards { grid-template-columns: 1fr; }
-  }
-
-  /* Tooltip style for chart */
-  .chart-container canvas { max-height: 500px; }
-
-  /* Filter buttons */
+  /* ===== FILTERS ===== */
   .filters {
     display: flex;
     gap: 8px;
-    margin-bottom: 16px;
+    margin-bottom: 20px;
     flex-wrap: wrap;
   }
   .filter-btn {
-    padding: 6px 16px;
-    border-radius: 20px;
-    border: 1px solid var(--border);
+    padding: 8px 20px;
+    border-radius: 24px;
+    border: 2px solid var(--border);
     background: var(--surface);
-    color: var(--text-dim);
-    font-size: 0.78rem;
+    color: var(--text-secondary);
+    font-size: 0.82rem;
+    font-weight: 600;
+    font-family: 'DM Sans', sans-serif;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.2s ease;
   }
-  .filter-btn:hover, .filter-btn.active {
-    background: var(--accent);
+  .filter-btn:hover {
+    border-color: var(--indigo);
+    color: var(--indigo);
+    background: var(--indigo-wash);
+  }
+  .filter-btn.active {
+    background: var(--indigo);
     color: white;
-    border-color: var(--accent);
+    border-color: var(--indigo);
   }
 
-  /* Scrollbar */
+  /* ===== FOOTER ===== */
+  .footer {
+    background: var(--indigo);
+    text-align: center;
+    padding: 32px 0;
+    color: rgba(255,255,255,0.5);
+    font-size: 0.82rem;
+    margin-top: 24px;
+  }
+  .footer strong { color: rgba(255,255,255,0.8); }
+
+  /* ===== SCROLLBAR ===== */
   ::-webkit-scrollbar { width: 6px; height: 6px; }
-  ::-webkit-scrollbar-track { background: var(--surface); }
+  ::-webkit-scrollbar-track { background: var(--surface-alt); }
   ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-  ::-webkit-scrollbar-thumb:hover { background: var(--text-dim); }
+  ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+  /* ===== ANIMATIONS ===== */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  .animate-up {
+    animation: fadeUp 0.6s cubic-bezier(0.16,1,0.3,1) both;
+  }
+  .animate-fade {
+    animation: fadeIn 0.5s ease both;
+  }
+  .delay-1 { animation-delay: 0.08s; }
+  .delay-2 { animation-delay: 0.16s; }
+  .delay-3 { animation-delay: 0.24s; }
+  .delay-4 { animation-delay: 0.32s; }
+  .delay-5 { animation-delay: 0.40s; }
+  .delay-6 { animation-delay: 0.48s; }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 1024px) {
+    .kpi-row { grid-template-columns: repeat(2, 1fr); }
+    .chart-row, .chart-row.even { grid-template-columns: 1fr; }
+    .header-title { font-size: 2.4rem; }
+  }
+  @media (max-width: 640px) {
+    .container { padding: 0 16px; }
+    .kpi-row { grid-template-columns: 1fr; }
+    .org-cards { grid-template-columns: 1fr; }
+    .header-title { font-size: 1.8rem; }
+    .header-main { padding: 32px 0 44px; }
+    .header-top { flex-direction: column; gap: 12px; align-items: flex-start; }
+  }
 </style>
 </head>
 <body>
 
-<div class="hero">
+<!-- ===== HEADER ===== -->
+<div class="header">
   <div class="container">
-    <h1>Central Dade Arts Expansion 2026</h1>
-    <p class="subtitle">Central Dade Music Alliance &mdash; Grant Budget Proposal Overview</p>
+    <div class="header-top">
+      <div class="logo-area">
+        <img src="aam logo.jpg" alt="Arts Access Miami">
+        <span class="logo-text">Central Region Alliance</span>
+      </div>
+      <span class="header-badge">2026 Proposed Budget</span>
+    </div>
+    <div class="header-main animate-up">
+      <span class="header-label">Proposed Grant Allocation</span>
+      <h1 class="header-title">Central Region Arts Expansion 2026</h1>
+      <p class="header-subtitle">A comprehensive overview of proposed funding across 13 arts organizations and 22 schools in the Central Dade region.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== KPI STRIP ===== -->
+<div class="container">
+  <div class="kpi-strip">
     <div class="kpi-row">
-      <div class="kpi">
+      <div class="kpi animate-up delay-1">
         <div class="value" id="kpiTotalBudget">&mdash;</div>
-        <div class="label">Total Budget Granted</div>
+        <div class="label">Total Budget</div>
         <div class="detail" id="kpiTotalDetail">Awaiting data</div>
       </div>
-      <div class="kpi">
+      <div class="kpi animate-up delay-2">
         <div class="value" id="kpiOrgCount">&mdash;</div>
         <div class="label">Arts Organizations</div>
-        <div class="detail">Serving music, dance, theater, visual arts & poetry</div>
+        <div class="detail">Music, dance, theater, visual arts & poetry</div>
       </div>
-      <div class="kpi">
+      <div class="kpi animate-up delay-3">
         <div class="value" id="kpiSchoolCount">&mdash;</div>
         <div class="label">Schools Served</div>
         <div class="detail">Elementary, K-8, Middle & Senior High</div>
       </div>
-      <div class="kpi">
+      <div class="kpi animate-up delay-4">
         <div class="value" id="kpiPlacements">&mdash;</div>
         <div class="label">School-Org Placements</div>
         <div class="detail" id="kpiPlacementsDetail">Awaiting data</div>
       </div>
     </div>
   </div>
-</div>
-
-<div class="container">
 
   <!-- Budget by Org -->
-  <div class="section">
-    <h2 class="section-title"><span class="dot"></span>Budget by Organization</h2>
+  <div class="section animate-fade delay-3">
+    <div class="section-header">
+      <div class="section-icon blue"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+      <h2 class="section-title">Budget by Organization</h2>
+    </div>
     <div class="chart-row">
       <div class="chart-container">
         <canvas id="budgetChart"></canvas>
@@ -427,8 +650,11 @@
   </div>
 
   <!-- Expansion -->
-  <div class="section">
-    <h2 class="section-title"><span class="dot" style="background:var(--accent2)"></span>Expansion Overview</h2>
+  <div class="section animate-fade delay-4">
+    <div class="section-header">
+      <div class="section-icon green"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
+      <h2 class="section-title">Expansion Overview</h2>
+    </div>
     <div class="chart-row even">
       <div class="chart-container">
         <canvas id="expansionChart"></canvas>
@@ -440,8 +666,11 @@
   </div>
 
   <!-- School Program Grid -->
-  <div class="section">
-    <h2 class="section-title"><span class="dot" style="background:var(--accent3)"></span>School-by-School Program Map</h2>
+  <div class="section animate-fade delay-5">
+    <div class="section-header">
+      <div class="section-icon coral"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+      <h2 class="section-title">School-by-School Program Map</h2>
+    </div>
     <div class="legend">
       <div class="legend-item"><div class="legend-dot" style="background:var(--music)"></div>Music</div>
       <div class="legend-item"><div class="legend-dot" style="background:var(--dance)"></div>Dance</div>
@@ -455,8 +684,11 @@
   </div>
 
   <!-- Org Cards -->
-  <div class="section">
-    <h2 class="section-title"><span class="dot" style="background:var(--accent4)"></span>Organization Profiles</h2>
+  <div class="section animate-fade delay-6">
+    <div class="section-header">
+      <div class="section-icon orange"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+      <h2 class="section-title">Organization Profiles</h2>
+    </div>
     <div class="filters" id="orgFilters">
       <button class="filter-btn active" data-filter="all">All</button>
       <button class="filter-btn" data-filter="new">New Schools</button>
@@ -465,17 +697,14 @@
     </div>
     <div class="org-cards" id="orgCards"></div>
   </div>
-
 </div>
 
 <div class="footer">
-  Central Dade Music Alliance &mdash; 2026 Grant Budget Proposal &mdash; Internal Review Dashboard
+  <strong>Arts Access Miami</strong> &mdash; Central Region Alliance &mdash; 2026 Proposed Grant Allocation &mdash; Internal Review
 </div>
 
 <script>
 // ============ DATA ============
-
-// ============ DATA — from "Copy of Central Budget Proposal 2026.xlsx" ============
 
 const orgs = [
   { abbr: 'YMU', name: 'Young Musicians Unite', requested: 200000, granted: 200000, existing: 9, newSchools: 11, discipline: 'Music', type: 'In-school music education', detail: 'Anchor in-school provider across all 22 schools: Pitch & Rhythm, Drumline, Modern Band, Beginning Band, Music Production.' },
@@ -599,11 +828,10 @@ const pillClasses = { music: 'pill-music', dance: 'pill-dance', theater: 'pill-t
 
 // ============ CHARTS ============
 
-Chart.defaults.color = '#8b90a5';
-Chart.defaults.borderColor = '#2e3345';
-Chart.defaults.font.family = "'SF Pro Display', -apple-system, sans-serif";
+Chart.defaults.color = '#9897B3';
+Chart.defaults.borderColor = '#E4E3EF';
+Chart.defaults.font.family = "'DM Sans', sans-serif";
 
-// Empty-state plugin: shows "No data yet" when datasets are empty
 const emptyStatePlugin = {
   id: 'emptyState',
   afterDraw(chart) {
@@ -613,8 +841,8 @@ const emptyStatePlugin = {
       ctx.save();
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      ctx.font = '16px -apple-system, sans-serif';
-      ctx.fillStyle = '#8b90a5';
+      ctx.font = "500 15px 'DM Sans', sans-serif";
+      ctx.fillStyle = '#9897B3';
       ctx.fillText('No data yet', width / 2, height / 2);
       ctx.restore();
     }
@@ -622,14 +850,13 @@ const emptyStatePlugin = {
 };
 Chart.register(emptyStatePlugin);
 
-// Update KPIs from data
+// KPIs
 function updateKPIs() {
-  const totalGranted = orgs.reduce((s,o) => s + o.granted, 0);
+  const totalSchoolBudget = schools.reduce((s,sc) => s + sc.budget, 0);
   const totalExisting = orgs.reduce((s,o) => s + o.existing, 0);
   const totalNew = orgs.reduce((s,o) => s + o.newSchools, 0);
   const totalPlacements = schools.reduce((s,sc) => s + sc.programs.length, 0);
 
-  const totalSchoolBudget = schools.reduce((s,sc) => s + sc.budget, 0);
   document.getElementById('kpiTotalBudget').textContent = orgs.length ? '$' + (totalSchoolBudget / 1000).toFixed(0) + 'K' : '\u2014';
   document.getElementById('kpiTotalDetail').textContent = orgs.length ? '$' + totalSchoolBudget.toLocaleString(undefined, {maximumFractionDigits:0}) + ' across all schools' : 'Awaiting data';
   document.getElementById('kpiOrgCount').textContent = orgs.length || '\u2014';
@@ -649,18 +876,18 @@ new Chart(document.getElementById('budgetChart'), {
       {
         label: 'Requested',
         data: sortedOrgs.map(o => o.requested),
-        backgroundColor: 'rgba(108,99,255,0.3)',
-        borderColor: 'rgba(108,99,255,0.6)',
+        backgroundColor: 'rgba(45,43,127,0.18)',
+        borderColor: 'rgba(45,43,127,0.4)',
         borderWidth: 1,
-        borderRadius: 4,
+        borderRadius: 6,
       },
       {
         label: 'Granted',
         data: sortedOrgs.map(o => o.granted),
-        backgroundColor: 'rgba(0,212,170,0.5)',
-        borderColor: 'rgba(0,212,170,0.8)',
+        backgroundColor: 'rgba(0,180,166,0.55)',
+        borderColor: 'rgba(0,180,166,0.8)',
         borderWidth: 1,
-        borderRadius: 4,
+        borderRadius: 6,
       }
     ]
   },
@@ -669,24 +896,25 @@ new Chart(document.getElementById('budgetChart'), {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
-      legend: { position: 'top' },
-      title: { display: true, text: 'Requested vs. Granted Funding', font: { size: 14, weight: 600 } },
+      legend: { position: 'top', labels: { usePointStyle: true, pointStyle: 'rectRounded', padding: 20, font: { weight: 600 } } },
+      title: { display: true, text: 'Requested vs. Granted Funding', font: { size: 15, weight: 700, family: "'Nunito', sans-serif" }, color: '#1A1A2E', padding: { bottom: 16 } },
       tooltip: {
+        backgroundColor: '#2D2B7F',
+        titleFont: { weight: 700 },
+        cornerRadius: 10,
+        padding: 12,
         callbacks: {
           label: ctx => `${ctx.dataset.label}: $${ctx.raw.toLocaleString()}`,
-          afterLabel: ctx => {
-            const org = sortedOrgs[ctx.dataIndex];
-            return org ? org.name : '';
-          }
+          afterLabel: ctx => sortedOrgs[ctx.dataIndex] ? sortedOrgs[ctx.dataIndex].name : ''
         }
       }
     },
     scales: {
       x: {
-        ticks: { callback: v => '$' + (v/1000) + 'K' },
-        grid: { color: 'rgba(46,51,69,0.5)' }
+        ticks: { callback: v => '$' + (v/1000) + 'K', font: { weight: 500 } },
+        grid: { color: 'rgba(228,227,239,0.5)' }
       },
-      y: { grid: { display: false } }
+      y: { grid: { display: false }, ticks: { font: { weight: 700 } } }
     }
   }
 });
@@ -697,19 +925,25 @@ const totalGranted = orgs.reduce((s,o) => s + o.granted, 0);
 new Chart(document.getElementById('fundingRatioChart'), {
   type: 'doughnut',
   data: {
-    labels: totalGranted > 0 ? ['Granted ($' + (totalGranted/1000).toFixed(0) + 'K)', 'Unfunded Requests ($' + ((totalRequested - totalGranted)/1000).toFixed(0) + 'K)', 'Equipment / STM ($50K)'] : [],
+    labels: totalGranted > 0 ? ['Granted ($' + (totalGranted/1000).toFixed(0) + 'K)', 'Unfunded ($' + ((totalRequested - totalGranted)/1000).toFixed(0) + 'K)', 'Equipment / STM ($50K)'] : [],
     datasets: [{
       data: totalGranted > 0 ? [totalGranted, totalRequested - totalGranted, 50000] : [],
-      backgroundColor: ['rgba(108,99,255,0.6)', 'rgba(0,212,170,0.6)', 'rgba(255,179,71,0.6)'],
-      borderColor: ['rgba(108,99,255,0.9)', 'rgba(0,212,170,0.9)', 'rgba(255,179,71,0.9)'],
-      borderWidth: 1
+      backgroundColor: ['#2D2B7F', '#00B4A6', '#F5A623'],
+      borderColor: '#FFFFFF',
+      borderWidth: 3,
+      hoverBorderWidth: 0,
     }]
   },
   options: {
     responsive: true,
+    cutout: '62%',
     plugins: {
-      title: { display: true, text: 'Total Funding Composition', font: { size: 14, weight: 600 } },
+      title: { display: true, text: 'Total Funding Composition', font: { size: 15, weight: 700, family: "'Nunito', sans-serif" }, color: '#1A1A2E', padding: { bottom: 16 } },
+      legend: { position: 'bottom', labels: { usePointStyle: true, pointStyle: 'circle', padding: 16, font: { weight: 500 } } },
       tooltip: {
+        backgroundColor: '#2D2B7F',
+        cornerRadius: 10,
+        padding: 12,
         callbacks: { label: ctx => `${ctx.label}: $${ctx.raw.toLocaleString()}` }
       }
     }
@@ -726,30 +960,34 @@ new Chart(document.getElementById('expansionChart'), {
       {
         label: 'Existing Schools',
         data: expandOrgs.map(o => o.existing),
-        backgroundColor: 'rgba(108,99,255,0.5)',
-        borderRadius: 4
+        backgroundColor: '#2D2B7F',
+        borderRadius: 6
       },
       {
         label: 'New Schools',
         data: expandOrgs.map(o => o.newSchools),
-        backgroundColor: 'rgba(0,212,170,0.5)',
-        borderRadius: 4
+        backgroundColor: '#C5E83D',
+        borderRadius: 6
       }
     ]
   },
   options: {
     responsive: true,
     plugins: {
-      title: { display: true, text: 'Existing vs. New School Placements by Org', font: { size: 14, weight: 600 } },
+      title: { display: true, text: 'Existing vs. New School Placements', font: { size: 15, weight: 700, family: "'Nunito', sans-serif" }, color: '#1A1A2E', padding: { bottom: 16 } },
+      legend: { labels: { usePointStyle: true, pointStyle: 'rectRounded', padding: 20, font: { weight: 600 } } },
       tooltip: {
+        backgroundColor: '#2D2B7F',
+        cornerRadius: 10,
+        padding: 12,
         callbacks: {
           afterTitle: ctx => expandOrgs[ctx[0].dataIndex] ? expandOrgs[ctx[0].dataIndex].name : ''
         }
       }
     },
     scales: {
-      x: { stacked: true, grid: { display: false } },
-      y: { stacked: true, ticks: { stepSize: 1 } }
+      x: { stacked: true, grid: { display: false }, ticks: { font: { weight: 700 } } },
+      y: { stacked: true, ticks: { stepSize: 1, font: { weight: 500 } }, grid: { color: 'rgba(228,227,239,0.5)' } }
     }
   }
 });
@@ -757,24 +995,14 @@ new Chart(document.getElementById('expansionChart'), {
 // Discipline Chart
 const disciplineCounts = {};
 const disciplineColors = {
-  music: 'rgba(108,99,255,0.7)',
-  dance: 'rgba(255,107,138,0.7)',
-  theater: 'rgba(255,179,71,0.7)',
-  visual: 'rgba(0,212,170,0.7)',
-  poetry: 'rgba(171,71,188,0.7)',
-  orchestra: 'rgba(79,195,247,0.7)',
-  choir: 'rgba(233,30,99,0.7)',
-  general: 'rgba(120,144,156,0.7)'
+  music: '#2D2B7F', dance: '#E91E63', theater: '#F5A623',
+  visual: '#00B4A6', poetry: '#9C27B0', orchestra: '#4FACFE',
+  choir: '#FF6B6B', general: '#78909C'
 };
 const disciplineLabels = {
-  music: 'Music',
-  dance: 'Dance',
-  theater: 'Musical Theater',
-  visual: 'Visual Arts',
-  poetry: 'Poetry / Literary',
-  orchestra: 'Orchestra',
-  choir: 'Choir',
-  general: 'General / Other'
+  music: 'Music', dance: 'Dance', theater: 'Musical Theater',
+  visual: 'Visual Arts', poetry: 'Poetry / Literary', orchestra: 'Orchestra',
+  choir: 'Choir', general: 'General / Other'
 };
 schools.forEach(s => {
   s.programs.forEach(p => {
@@ -789,18 +1017,22 @@ new Chart(document.getElementById('disciplineChart'), {
     datasets: [{
       data: discKeys.map(k => disciplineCounts[k]),
       backgroundColor: discKeys.map(k => disciplineColors[k]),
-      borderWidth: 1,
-      borderColor: '#1a1d27'
+      borderColor: '#FFFFFF',
+      borderWidth: 3,
+      hoverBorderWidth: 0,
     }]
   },
   options: {
     responsive: true,
+    cutout: '58%',
     plugins: {
-      title: { display: true, text: 'Program Placements by Arts Discipline', font: { size: 14, weight: 600 } },
+      title: { display: true, text: 'Placements by Arts Discipline', font: { size: 15, weight: 700, family: "'Nunito', sans-serif" }, color: '#1A1A2E', padding: { bottom: 16 } },
+      legend: { position: 'bottom', labels: { usePointStyle: true, pointStyle: 'circle', padding: 14, font: { weight: 500, size: 12 } } },
       tooltip: {
-        callbacks: {
-          label: ctx => `${ctx.label}: ${ctx.raw} placements`
-        }
+        backgroundColor: '#2D2B7F',
+        cornerRadius: 10,
+        padding: 12,
+        callbacks: { label: ctx => `${ctx.label}: ${ctx.raw} placements` }
       }
     }
   }
@@ -819,37 +1051,33 @@ function buildGrid() {
     const after = s.programs.filter(p => p.setting !== 'In-school');
 
     html += '<tr>';
-    html += `<td style="color:var(--text-dim);font-weight:600;">${s.num}</td>`;
+    html += `<td style="color:var(--text-muted);font-weight:700;font-size:0.78rem;">${s.num}</td>`;
     html += `<td><span class="school-name">${s.name}</span></td>`;
     html += `<td><span class="school-type ${typeClasses[s.type]}">${typeLabels[s.type]}</span></td>`;
 
-    // In-school
     html += '<td>';
     if (inSchool.length) {
       inSchool.forEach(p => {
         const bud = p.budget ? ' $' + p.budget.toLocaleString(undefined,{maximumFractionDigits:0}) : '';
-        html += `<span class="program-pill ${pillClasses[p.discipline]}">${p.course} <span style="opacity:0.6">(${p.org}${bud})</span></span> `;
+        html += `<span class="program-pill ${pillClasses[p.discipline]}">${p.course} <span style="opacity:0.5;font-weight:400">(${p.org}${bud})</span></span> `;
       });
     } else {
       html += '<span class="empty-cell">&mdash;</span>';
     }
     html += '</td>';
 
-    // Afterschool + Equipment + Saturdays
     html += '<td>';
     if (after.length) {
       after.forEach(p => {
         const bud = p.budget ? ' $' + p.budget.toLocaleString(undefined,{maximumFractionDigits:0}) : '';
-        html += `<span class="program-pill ${pillClasses[p.discipline]}">${p.course} <span style="opacity:0.6">(${p.org}${bud})</span></span> `;
+        html += `<span class="program-pill ${pillClasses[p.discipline]}">${p.course} <span style="opacity:0.5;font-weight:400">(${p.org}${bud})</span></span> `;
       });
     } else {
       html += '<span class="empty-cell">&mdash;</span>';
     }
     html += '</td>';
 
-    // School total budget
-    html += `<td style="text-align:right;font-weight:600;color:var(--accent2);white-space:nowrap;">$${s.budget.toLocaleString(undefined,{maximumFractionDigits:0})}</td>`;
-
+    html += `<td style="text-align:right;font-weight:700;color:var(--indigo);white-space:nowrap;font-family:'Nunito',sans-serif;">$${s.budget.toLocaleString(undefined,{maximumFractionDigits:0})}</td>`;
     html += '</tr>';
   });
 
@@ -884,14 +1112,14 @@ function buildOrgCards(filter) {
   if (filter === 'both') filtered = orgs.filter(o => o.existing > 0 && o.newSchools > 0);
 
   let html = '';
-  filtered.forEach(o => {
+  filtered.forEach((o, i) => {
     const schoolList = getOrgSchools(o.abbr);
     const expansionType = o.existing > 0 && o.newSchools > 0 ? 'Expanding + New' :
       o.newSchools > 0 ? 'New Schools' :
       o.existing > 0 ? 'Expanding Existing' : 'Residency / Other';
     const ratio = o.requested > 0 ? ((o.granted / o.requested) * 100).toFixed(0) : 'N/A';
 
-    html += `<div class="org-card">
+    html += `<div class="org-card" style="animation: fadeUp 0.5s cubic-bezier(0.16,1,0.3,1) ${i * 0.05}s both;">
       <div class="org-card-header">
         <div>
           <div class="org-card-name">${o.abbr}</div>
@@ -906,7 +1134,7 @@ function buildOrgCards(filter) {
           <span class="program-pill ${pillClasses[o.discipline.toLowerCase()] || 'pill-general'}">${o.discipline}</span>
         </div>
       </div>
-      <div style="font-size:0.78rem;color:var(--text-dim);margin-bottom:10px;">${o.detail}</div>
+      <div class="org-card-detail">${o.detail}</div>
       <div class="org-card-schools">
         ${schoolList.map(s => `<span class="org-school-tag">${s}</span>`).join('')}
       </div>
@@ -926,7 +1154,6 @@ function buildOrgCards(filter) {
 
 buildOrgCards('all');
 
-// Filter buttons
 document.getElementById('orgFilters').addEventListener('click', e => {
   if (e.target.classList.contains('filter-btn')) {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -935,7 +1162,6 @@ document.getElementById('orgFilters').addEventListener('click', e => {
   }
 });
 
-// Set chart container heights
 document.querySelectorAll('.chart-container').forEach(el => {
   const canvas = el.querySelector('canvas');
   if (canvas && canvas.id === 'budgetChart') {
