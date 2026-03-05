@@ -388,24 +388,24 @@
     <p class="subtitle">Central Dade Music Alliance &mdash; Grant Budget Proposal Overview</p>
     <div class="kpi-row">
       <div class="kpi">
-        <div class="value">$1.48M</div>
+        <div class="value" id="kpiTotalBudget">&mdash;</div>
         <div class="label">Total Budget Granted</div>
-        <div class="detail">$1,420,397 programs + $55,000 equipment</div>
+        <div class="detail" id="kpiTotalDetail">Awaiting data</div>
       </div>
       <div class="kpi">
-        <div class="value">16</div>
+        <div class="value" id="kpiOrgCount">&mdash;</div>
         <div class="label">Arts Organizations</div>
         <div class="detail">Serving music, dance, theater, visual arts & poetry</div>
       </div>
       <div class="kpi">
-        <div class="value">22</div>
+        <div class="value" id="kpiSchoolCount">&mdash;</div>
         <div class="label">Schools Served</div>
         <div class="detail">Elementary, K-8, Middle & Senior High</div>
       </div>
       <div class="kpi">
-        <div class="value">38</div>
+        <div class="value" id="kpiPlacements">&mdash;</div>
         <div class="label">School-Org Placements</div>
-        <div class="detail">16 existing + 22 new locations</div>
+        <div class="detail" id="kpiPlacementsDetail">Awaiting data</div>
       </div>
     </div>
   </div>
@@ -475,119 +475,12 @@
 <script>
 // ============ DATA ============
 
-const orgs = [
-  { abbr: 'YMU', name: 'Young Musicians Unite', requested: 200000, granted: 200000, existing: 9, newSchools: 11, discipline: 'Music', type: 'In-school music education', detail: 'Anchor in-school provider: Pitch & Rhythm, Drumline, Modern Band, Beginning Band, Music Production across all 22 schools.' },
-  { abbr: 'MCM', name: 'Miami SCORES (Power of Poetry)', requested: 50000, granted: 195000, existing: 2, newSchools: 1, discipline: 'Poetry', type: 'Afterschool poetry program', detail: 'Strengthening Power of Poetry program with program director salary and teacher-coach stipends. Expanding to Carrie P. Meek/Westview K-8.' },
-  { abbr: 'TME', name: 'The Music Explosion', requested: 50000, granted: 175000, existing: 0, newSchools: 1, discipline: 'Music', type: 'Music production & lyrical expression', detail: 'Music Production and Lyrical Expression programming. Expanding to Brownsville Middle.' },
-  { abbr: 'MMP', name: 'Miami Music Project', requested: 75000, granted: 150000, existing: 1, newSchools: 0, discipline: 'Orchestra', type: 'Afterschool orchestra', detail: 'Expanding tuition-free orchestral programming in Liberty City to reach 97 total students at Henry Reeves Elementary.' },
-  { abbr: 'ABT', name: 'Arts Ballet Theatre', requested: 0, granted: 105000, existing: 0, newSchools: 0, discipline: 'Dance', type: 'Ballet residency', detail: '22-week in-residence ballet program at Van E. Blanton Elementary and Benjamin Franklin K-8. Serves 120-160 students per school.' },
-  { abbr: 'GoGo', name: 'GoGo', requested: 80000, granted: 104918, existing: 4, newSchools: 2, discipline: 'Music', type: 'Afterschool ensemble', detail: 'Afterschool modern band ensemble. Expanding to Benjamin Franklin K-8 and Miami Central Senior High.' },
-  { abbr: 'MCB', name: 'Miami City Ballet', requested: 68000, granted: 71776, existing: 2, newSchools: 0, discipline: 'Dance', type: 'Explore Dance program', detail: 'Expanding Explore Dance at Broadmoor and Maya Angelou Elementary from 1x to 2x weekly, extending to 30-week sustained model. 60 students each.' },
-  { abbr: 'VYM', name: 'Voices of Young Musicians', requested: 70000, granted: 70000, existing: 0, newSchools: 3, discipline: 'Choir', type: 'Afterschool choir', detail: 'New choir programming at Holmes, Orchard Villa, and Melrose Elementary schools. Serving 50-200 students grades K-5.' },
-  { abbr: 'TV', name: 'Teeny Violini', requested: 60000, granted: 65000, existing: 0, newSchools: 2, discipline: 'Music', type: 'Violin & early music learning', detail: 'Arts-focused violin and early music instruction at two Central Dade schools: Liberty City Elementary and Olinda (Paschal Elementary).' },
-  { abbr: 'AM', name: 'Achieve Miami', requested: 45000, granted: 61703, existing: 0, newSchools: 1, discipline: 'Music', type: 'Literature & music programs', detail: 'Additional class of 25 students at Earlington Heights. Requesting expansion at Arcola Lake Elementary site.' },
-  { abbr: 'STM', name: 'Strings for Tomorrow', requested: 50000, granted: 60000, existing: 0, newSchools: 2, discipline: 'Music', type: 'Instrumental music', detail: 'Core instrumental programs (Band, Strings, Mariachi, Sonidos Latinos) at 2 schools TBD. $25K-$60K per site depending on program type.' },
-  { abbr: 'A4L', name: 'Arts for Learning', requested: 42000, granted: 42000, existing: 2, newSchools: 0, discipline: 'Visual Arts', type: 'Visual art & multidisciplinary', detail: 'Expanding from 2 to 4 days/week at Georgia Jones-Ayers Middle and Madison Middle. Visual art and theater programming.' },
-  { abbr: 'DAE', name: 'Diva Arts Education', requested: 40000, granted: 40000, existing: 2, newSchools: 1, discipline: 'Dance', type: 'Dance & musical theater', detail: 'Dance, Musical Theater, Personal Development. Expanding to Lakeview Elementary. Existing at Charles Drew K-8 and Arcola Lakes.' },
-  { abbr: 'EAL', name: 'EVO / Arts & Learning', requested: 38000, granted: 40000, existing: 2, newSchools: 1, discipline: 'Theater', type: 'Musical theater & film', detail: 'Musical theater, film and music for 1st-2nd graders. At Lillie C. Evans, Arcola Lake, and expanding to Charles Drew K-8.' },
-  { abbr: 'OM', name: 'O, Miami (Poetry)', requested: 0, granted: 40000, existing: 0, newSchools: 0, discipline: 'Poetry', type: 'Poetry residency', detail: 'Embedding poets in K-12 classrooms for weekly 10-week residencies. Serving 200 students with sustained instruction.' },
-];
+// ============ DATA (empty — ready to be populated) ============
+// Organization format: { abbr, name, requested, granted, existing, newSchools, discipline, type, detail }
+const orgs = [];
 
-const schools = [
-  { num: 1, name: 'Northwestern Senior High', type: 'high', programs: [
-    { setting: 'In-school', course: 'Beginning Band / Drumline', org: 'YMU', discipline: 'music' }
-  ]},
-  { num: 2, name: 'Miami Central Senior High', type: 'high', programs: [
-    { setting: 'In-school', course: 'Beginning Band', org: 'YMU', discipline: 'music' },
-    { setting: 'Afterschool', course: 'Ensemble', org: 'GoGo', discipline: 'music' },
-    { setting: 'Saturdays', course: 'Literature Programs', org: 'Achieve Miami', discipline: 'general' }
-  ]},
-  { num: 3, name: 'Brownsville Middle', type: 'middle', programs: [
-    { setting: 'In-school', course: 'Drumline', org: 'YMU', discipline: 'music' },
-    { setting: 'Afterschool', course: 'Music Production', org: 'TME', discipline: 'music' }
-  ]},
-  { num: 4, name: 'Madison Middle', type: 'middle', programs: [
-    { setting: 'In-school', course: 'Drumline', org: 'YMU', discipline: 'music' },
-    { setting: 'Afterschool', course: 'Visual Art', org: 'A4L', discipline: 'visual' }
-  ]},
-  { num: 5, name: 'Dr. Charles R. Drew K-8 Center', type: 'k8', programs: [
-    { setting: 'In-school', course: 'Music Production', org: 'YMU', discipline: 'music' },
-    { setting: 'In-school', course: 'Drumline', org: 'YMU', discipline: 'music' },
-    { setting: 'Afterschool', course: 'Dance', org: 'DAE', discipline: 'dance' }
-  ]},
-  { num: 6, name: 'Lillie C. Evans K-8 Center', type: 'k8', programs: [
-    { setting: 'In-school', course: 'Drumline', org: 'YMU', discipline: 'music' },
-    { setting: 'In-school', course: 'Modern Band', org: 'YMU', discipline: 'music' },
-    { setting: 'Afterschool', course: 'Musical Theater', org: 'EAL', discipline: 'theater' }
-  ]},
-  { num: 7, name: 'Henry E.S. Reeves K-8', type: 'k8', programs: [
-    { setting: 'In-school', course: 'Drumline', org: 'YMU', discipline: 'music' },
-    { setting: 'In-school', course: 'Beginning Band', org: 'YMU', discipline: 'music' },
-    { setting: 'Afterschool', course: 'Orchestra', org: 'MMP', discipline: 'orchestra' }
-  ]},
-  { num: 8, name: 'Benjamin Franklin K-8 Center', type: 'k8', programs: [
-    { setting: 'In-school', course: 'Modern Band', org: 'YMU', discipline: 'music' },
-    { setting: 'In-school', course: 'Beginning Band', org: 'YMU', discipline: 'music' },
-    { setting: 'Afterschool', course: 'Modern Band', org: 'GoGo', discipline: 'music' }
-  ]},
-  { num: 9, name: 'Carrie P. Meek / Westview K-8', type: 'k8', programs: [
-    { setting: 'In-school', course: 'Music Production', org: 'YMU', discipline: 'music' },
-    { setting: 'In-school', course: 'Modern Band', org: 'YMU', discipline: 'music' },
-    { setting: 'Afterschool', course: 'Poetry', org: 'MCM', discipline: 'poetry' }
-  ]},
-  { num: 10, name: 'Dr. Henry W. Mack / West Little River K-8', type: 'k8', programs: [
-    { setting: 'In-school', course: 'Drumline', org: 'YMU', discipline: 'music' },
-    { setting: 'In-school', course: 'Modern Band', org: 'YMU', discipline: 'music' },
-    { setting: 'Afterschool', course: 'Marching Band', org: 'YMU', discipline: 'music' }
-  ]},
-  { num: 11, name: 'Agenoria S. Paschal Elementary (Olinda)', type: 'elem', programs: [
-    { setting: 'In-school', course: 'Pitch & Rhythm', org: 'YMU', discipline: 'music' },
-    { setting: 'Afterschool', course: 'Early Learning Violin', org: 'TV', discipline: 'music' }
-  ]},
-  { num: 12, name: 'Earlington Heights Elementary', type: 'elem', programs: [
-    { setting: 'In-school', course: 'Pitch & Rhythm', org: 'YMU', discipline: 'music' },
-    { setting: 'Afterschool', course: 'Music', org: 'Achieve Miami', discipline: 'music' }
-  ]},
-  { num: 13, name: 'Holmes Elementary', type: 'elem', programs: [
-    { setting: 'In-school', course: 'Pitch & Rhythm', org: 'YMU', discipline: 'music' },
-    { setting: 'Afterschool', course: 'Choir', org: 'VYM', discipline: 'choir' }
-  ]},
-  { num: 14, name: 'Melrose Elementary', type: 'elem', programs: [
-    { setting: 'In-school', course: 'Pitch & Rhythm', org: 'YMU', discipline: 'music' },
-    { setting: 'Afterschool', course: 'Early Learning', org: 'VYM', discipline: 'choir' }
-  ]},
-  { num: 15, name: 'Orchard Villa Elementary', type: 'elem', programs: [
-    { setting: 'In-school', course: 'Pitch & Rhythm', org: 'YMU', discipline: 'music' },
-    { setting: 'Afterschool', course: 'Choir', org: 'VYM', discipline: 'choir' }
-  ]},
-  { num: 16, name: 'Liberty City Elementary', type: 'elem', programs: [
-    { setting: 'In-school', course: 'Pitch & Rhythm', org: 'YMU', discipline: 'music' },
-    { setting: 'Afterschool', course: 'Early Learning Violin', org: 'TV', discipline: 'music' }
-  ]},
-  { num: 17, name: 'Arcola Lake Elementary', type: 'elem', programs: [
-    { setting: 'In-school', course: 'Pitch & Rhythm', org: 'YMU', discipline: 'music' },
-    { setting: 'Afterschool', course: 'Musical Theater', org: 'EAL', discipline: 'theater' }
-  ]},
-  { num: 18, name: 'Van E. Blanton Elementary', type: 'elem', programs: [
-    { setting: 'In-school', course: 'Pitch & Rhythm', org: 'YMU', discipline: 'music' },
-    { setting: 'Afterschool', course: 'Ballet', org: 'ABT', discipline: 'dance' }
-  ]},
-  { num: 19, name: 'Broadmoor Elementary', type: 'elem', programs: [
-    { setting: 'In-school', course: 'Pitch & Rhythm', org: 'YMU', discipline: 'music' },
-    { setting: 'Afterschool', course: 'Dance', org: 'MCB', discipline: 'dance' }
-  ]},
-  { num: 20, name: 'Lakeview Elementary', type: 'elem', programs: [
-    { setting: 'In-school', course: 'Pitch & Rhythm', org: 'YMU', discipline: 'music' },
-    { setting: 'Afterschool', course: 'Dance', org: 'DAE', discipline: 'dance' }
-  ]},
-  { num: 21, name: 'Georgia Jones-Ayers Middle', type: 'middle', programs: [
-    { setting: 'In-school', course: 'Pitch & Rhythm', org: 'YMU', discipline: 'music' },
-    { setting: 'Afterschool', course: 'Multidisciplinary Arts', org: 'A4L', discipline: 'visual' }
-  ]},
-  { num: 22, name: 'Maya Angelou Elementary', type: 'elem', programs: [
-    { setting: 'Afterschool', course: 'Dance', org: 'MCB', discipline: 'dance' }
-  ]}
-];
+// School format: { num, name, type ('elem'|'k8'|'middle'|'high'), programs: [{ setting, course, org, discipline }] }
+const schools = [];
 
 const typeLabels = { elem: 'Elementary', k8: 'K-8', middle: 'Middle', high: 'Senior High' };
 const typeClasses = { elem: 'type-elem', k8: 'type-k8', middle: 'type-middle', high: 'type-high' };
@@ -598,6 +491,41 @@ const pillClasses = { music: 'pill-music', dance: 'pill-dance', theater: 'pill-t
 Chart.defaults.color = '#8b90a5';
 Chart.defaults.borderColor = '#2e3345';
 Chart.defaults.font.family = "'SF Pro Display', -apple-system, sans-serif";
+
+// Empty-state plugin: shows "No data yet" when datasets are empty
+const emptyStatePlugin = {
+  id: 'emptyState',
+  afterDraw(chart) {
+    const hasData = chart.data.labels && chart.data.labels.length > 0;
+    if (!hasData) {
+      const { ctx, width, height } = chart;
+      ctx.save();
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.font = '16px -apple-system, sans-serif';
+      ctx.fillStyle = '#8b90a5';
+      ctx.fillText('No data yet', width / 2, height / 2);
+      ctx.restore();
+    }
+  }
+};
+Chart.register(emptyStatePlugin);
+
+// Update KPIs from data
+function updateKPIs() {
+  const totalGranted = orgs.reduce((s,o) => s + o.granted, 0);
+  const totalExisting = orgs.reduce((s,o) => s + o.existing, 0);
+  const totalNew = orgs.reduce((s,o) => s + o.newSchools, 0);
+  const totalPlacements = schools.reduce((s,sc) => s + sc.programs.length, 0);
+
+  document.getElementById('kpiTotalBudget').textContent = orgs.length ? '$' + (totalGranted / 1000000).toFixed(2) + 'M' : '\u2014';
+  document.getElementById('kpiTotalDetail').textContent = orgs.length ? '$' + totalGranted.toLocaleString() + ' programs' : 'Awaiting data';
+  document.getElementById('kpiOrgCount').textContent = orgs.length || '\u2014';
+  document.getElementById('kpiSchoolCount').textContent = schools.length || '\u2014';
+  document.getElementById('kpiPlacements').textContent = totalPlacements || '\u2014';
+  document.getElementById('kpiPlacementsDetail').textContent = orgs.length ? totalExisting + ' existing + ' + totalNew + ' new locations' : 'Awaiting data';
+}
+updateKPIs();
 
 // Budget Chart
 const sortedOrgs = [...orgs].sort((a, b) => b.granted - a.granted);
@@ -636,7 +564,7 @@ new Chart(document.getElementById('budgetChart'), {
           label: ctx => `${ctx.dataset.label}: $${ctx.raw.toLocaleString()}`,
           afterLabel: ctx => {
             const org = sortedOrgs[ctx.dataIndex];
-            return org.name;
+            return org ? org.name : '';
           }
         }
       }
@@ -657,9 +585,9 @@ const totalGranted = orgs.reduce((s,o) => s + o.granted, 0);
 new Chart(document.getElementById('fundingRatioChart'), {
   type: 'doughnut',
   data: {
-    labels: ['Requested ($' + (totalRequested/1000).toFixed(0) + 'K)', 'Additional Granted ($' + ((totalGranted - totalRequested)/1000).toFixed(0) + 'K)', 'Equipment ($55K)'],
+    labels: totalGranted > 0 ? ['Requested ($' + (totalRequested/1000).toFixed(0) + 'K)', 'Additional Granted ($' + ((totalGranted - totalRequested)/1000).toFixed(0) + 'K)', 'Equipment ($55K)'] : [],
     datasets: [{
-      data: [totalRequested, totalGranted - totalRequested, 55000],
+      data: totalGranted > 0 ? [totalRequested, totalGranted - totalRequested, 55000] : [],
       backgroundColor: ['rgba(108,99,255,0.6)', 'rgba(0,212,170,0.6)', 'rgba(255,179,71,0.6)'],
       borderColor: ['rgba(108,99,255,0.9)', 'rgba(0,212,170,0.9)', 'rgba(255,179,71,0.9)'],
       borderWidth: 1
@@ -703,7 +631,7 @@ new Chart(document.getElementById('expansionChart'), {
       title: { display: true, text: 'Existing vs. New School Placements by Org', font: { size: 14, weight: 600 } },
       tooltip: {
         callbacks: {
-          afterTitle: ctx => expandOrgs[ctx[0].dataIndex].name
+          afterTitle: ctx => expandOrgs[ctx[0].dataIndex] ? expandOrgs[ctx[0].dataIndex].name : ''
         }
       }
     },
