@@ -663,6 +663,9 @@
         <canvas id="disciplineChart"></canvas>
       </div>
     </div>
+    <div class="chart-container" style="margin-top:24px;">
+      <canvas id="grantImpactChart"></canvas>
+    </div>
   </div>
 
   <!-- School Program Grid -->
@@ -707,19 +710,19 @@
 // ============ DATA ============
 
 const orgs = [
-  { abbr: 'YMU', name: 'Young Musicians Unite', requested: 200000, granted: 200000, existing: 9, newSchools: 11, discipline: 'Music', type: 'In-school music education', detail: 'Anchor in-school provider across all 22 schools: Pitch & Rhythm, Drumline, Modern Band, Beginning Band, Music Production.' },
-  { abbr: 'GoGo', name: 'Guitars Over Guns', requested: 104918, granted: 80000, existing: 4, newSchools: 2, discipline: 'Music', type: 'Afterschool ensemble', detail: 'Afterschool modern band ensemble at Benjamin Franklin K-8 and Miami Central Senior High.' },
-  { abbr: 'AM', name: 'Achieve Miami', requested: 61703, granted: 45000, existing: 1, newSchools: 1, discipline: 'Music', type: 'Music & literature programs', detail: 'Music programming at Earlington Heights Elementary. Saturday literature programs at Miami Central.' },
-  { abbr: 'MMP', name: 'Miami Music Project', requested: 150000, granted: 75000, existing: 1, newSchools: 0, discipline: 'Orchestra', type: 'Afterschool orchestra', detail: 'Tuition-free orchestral programming at Henry E.S. Reeves K-8, 5 days/week, 3hr sessions.' },
-  { abbr: 'A4L', name: 'Arts for Learning', requested: 42000, granted: 42000, existing: 2, newSchools: 0, discipline: 'Visual Arts', type: 'Visual art & multidisciplinary', detail: 'Visual art and multidisciplinary arts at Georgia Jones-Ayers Middle (expanding 2 to 4 days) and Madison Middle.' },
-  { abbr: 'STM', name: 'Save the Music Foundation', requested: 60000, granted: 50000, existing: 0, newSchools: 2, discipline: 'Music', type: 'Instruments & equipment', detail: 'Instrument equipment grants at Van E. Blanton Elementary ($25K) and Broadmoor Elementary ($25K).' },
-  { abbr: 'TME', name: 'The Motivational Edge', requested: 175000, granted: 50000, existing: 0, newSchools: 1, discipline: 'Music', type: 'Music production', detail: 'Afterschool music production programming at Brownsville Middle, 5 days/week.' },
-  { abbr: 'VYM', name: 'Vocal Youth Miami', requested: 70000, granted: 70000, existing: 0, newSchools: 3, discipline: 'Choir', type: 'Afterschool choir', detail: 'New choir and early learning programming at Holmes, Orchard Villa, and Melrose Elementary schools, 2 days/week.' },
-  { abbr: 'TV', name: 'Teeny Violini', requested: 65000, granted: 65000, existing: 0, newSchools: 3, discipline: 'Music', type: 'Violin & early music learning', detail: 'Early learning violin instruction at Liberty City Elementary, Olinda (Paschal Elementary), and Van E. Blanton Elementary.' },
-  { abbr: 'EAL', name: 'Evolutionary Arts', requested: 40000, granted: 40000, existing: 2, newSchools: 1, discipline: 'Theater', type: 'Musical theater', detail: 'Musical theater programming at Lillie C. Evans K-8 and Arcola Lake Elementary.' },
-  { abbr: 'DAE', name: 'Diva Arts Education', requested: 40000, granted: 40000, existing: 2, newSchools: 1, discipline: 'Dance', type: 'Dance & musical theater', detail: 'Dance programming at Charles Drew K-8 and expanding to Lakeview Elementary.' },
-  { abbr: 'MCB', name: 'Miami City Ballet', requested: 71776, granted: 68000, existing: 2, newSchools: 0, discipline: 'Dance', type: 'Explore Dance program', detail: 'Expanding Explore Dance at Maya Angelou and Broadmoor Elementary from 1 to 2 days/week.' },
-  { abbr: 'MCM', name: 'Miami Children\'s Museum', requested: 195000, granted: 50000, existing: 2, newSchools: 1, discipline: 'Poetry', type: 'Afterschool poetry program', detail: 'Power of Poetry program at Carrie P. Meek/Westview K-8, 5 days/week.' },
+  { abbr: 'YMU', name: 'Young Musicians Unite', requested: 200000, granted: 200000, existing: 9, newSchools: 11, newStudents: 1760, discipline: 'Music', type: 'In-school music education', detail: 'Anchor in-school provider across all 22 schools: Pitch & Rhythm, Drumline, Modern Band, Beginning Band, Music Production.' },
+  { abbr: 'GoGo', name: 'Guitars Over Guns', requested: 104918, granted: 80000, existing: 4, newSchools: 2, newStudents: 220, discipline: 'Music', type: 'Afterschool ensemble', detail: 'Afterschool modern band ensemble at Benjamin Franklin K-8 and Miami Central Senior High.' },
+  { abbr: 'AM', name: 'Achieve Miami', requested: 61703, granted: 45000, existing: 1, newSchools: 1, newStudents: 150, discipline: 'Music', type: 'Music & literature programs', detail: 'Music programming at Earlington Heights Elementary. Saturday literature programs at Miami Central.' },
+  { abbr: 'MMP', name: 'Miami Music Project', requested: 150000, granted: 75000, existing: 1, newSchools: 0, newStudents: 130, discipline: 'Orchestra', type: 'Afterschool orchestra', detail: 'Tuition-free orchestral programming at Henry E.S. Reeves K-8, 5 days/week, 3hr sessions.' },
+  { abbr: 'A4L', name: 'Arts for Learning', requested: 42000, granted: 42000, existing: 2, newSchools: 0, newStudents: 240, discipline: 'Visual Arts', type: 'Visual art & multidisciplinary', detail: 'Visual art and multidisciplinary arts at Georgia Jones-Ayers Middle (expanding 2 to 4 days) and Madison Middle.' },
+  { abbr: 'STM', name: 'Save the Music Foundation', requested: 60000, granted: 50000, existing: 0, newSchools: 2, newStudents: 360, discipline: 'Music', type: 'Instruments & equipment', detail: 'Instrument equipment grants at Van E. Blanton Elementary ($25K) and Broadmoor Elementary ($25K).' },
+  { abbr: 'TME', name: 'The Motivational Edge', requested: 175000, granted: 50000, existing: 0, newSchools: 1, newStudents: 95, discipline: 'Music', type: 'Music production', detail: 'Afterschool music production programming at Brownsville Middle, 5 days/week.' },
+  { abbr: 'VYM', name: 'Vocal Youth Miami', requested: 70000, granted: 70000, existing: 0, newSchools: 3, newStudents: 270, discipline: 'Choir', type: 'Afterschool choir', detail: 'New choir and early learning programming at Holmes, Orchard Villa, and Melrose Elementary schools, 2 days/week.' },
+  { abbr: 'TV', name: 'Teeny Violini', requested: 65000, granted: 65000, existing: 0, newSchools: 3, newStudents: 255, discipline: 'Music', type: 'Violin & early music learning', detail: 'Early learning violin instruction at Liberty City Elementary, Olinda (Paschal Elementary), and Van E. Blanton Elementary.' },
+  { abbr: 'EAL', name: 'Evolutionary Arts', requested: 40000, granted: 40000, existing: 2, newSchools: 1, newStudents: 175, discipline: 'Theater', type: 'Musical theater', detail: 'Musical theater programming at Lillie C. Evans K-8 and Arcola Lake Elementary.' },
+  { abbr: 'DAE', name: 'Diva Arts Education', requested: 40000, granted: 40000, existing: 2, newSchools: 1, newStudents: 185, discipline: 'Dance', type: 'Dance & musical theater', detail: 'Dance programming at Charles Drew K-8 and expanding to Lakeview Elementary.' },
+  { abbr: 'MCB', name: 'Miami City Ballet', requested: 71776, granted: 68000, existing: 2, newSchools: 0, newStudents: 210, discipline: 'Dance', type: 'Explore Dance program', detail: 'Expanding Explore Dance at Maya Angelou and Broadmoor Elementary from 1 to 2 days/week.' },
+  { abbr: 'MCM', name: 'Miami Children\'s Museum', requested: 195000, granted: 50000, existing: 2, newSchools: 1, newStudents: 160, discipline: 'Poetry', type: 'Afterschool poetry program', detail: 'Power of Poetry program at Carrie P. Meek/Westview K-8, 5 days/week.' },
 ];
 
 const schools = [
@@ -1004,6 +1007,7 @@ const disciplineLabels = {
   visual: 'Visual Arts', poetry: 'Poetry / Literary', orchestra: 'Orchestra',
   choir: 'Choir', general: 'General / Other'
 };
+const disciplineSortOrder = ['music', 'dance', 'theater', 'visual', 'poetry', 'orchestra', 'choir', 'general'];
 schools.forEach(s => {
   s.programs.forEach(p => {
     disciplineCounts[p.discipline] = (disciplineCounts[p.discipline] || 0) + 1;
@@ -1033,6 +1037,81 @@ new Chart(document.getElementById('disciplineChart'), {
         cornerRadius: 10,
         padding: 12,
         callbacks: { label: ctx => `${ctx.label}: ${ctx.raw} placements` }
+      }
+    }
+  }
+});
+
+// Grant Impact Bubble Chart
+const impactPoints = [...orgs]
+  .map(org => {
+    const disciplineKey = org.discipline.toLowerCase() === 'visual arts'
+      ? 'visual'
+      : org.discipline.toLowerCase();
+    const dollarsPerNewStudent = org.newStudents > 0 ? org.granted / org.newStudents : 0;
+    return {
+      x: org.granted,
+      y: org.newStudents,
+      r: Math.max(6, org.newSchools * 2.8),
+      orgName: org.name,
+      abbr: org.abbr,
+      newSchools: org.newSchools,
+      disciplineKey,
+      dollarsPerNewStudent
+    };
+  })
+  .sort((a, b) => {
+    const disciplineDiff = disciplineSortOrder.indexOf(a.disciplineKey) - disciplineSortOrder.indexOf(b.disciplineKey);
+    if (disciplineDiff !== 0) return disciplineDiff;
+    return b.x - a.x;
+  });
+
+new Chart(document.getElementById('grantImpactChart'), {
+  type: 'bubble',
+  data: {
+    datasets: [{
+      label: 'Organizations',
+      data: impactPoints,
+      backgroundColor: impactPoints.map(point => `${disciplineColors[point.disciplineKey] || disciplineColors.general}A6`),
+      borderColor: impactPoints.map(point => disciplineColors[point.disciplineKey] || disciplineColors.general),
+      borderWidth: 2,
+      hoverBorderWidth: 3
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      title: { display: true, text: 'Grant Impact: Funding vs New Students Served', font: { size: 15, weight: 700, family: "'Nunito', sans-serif" }, color: '#1A1A2E', padding: { bottom: 16 } },
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: '#2D2B7F',
+        cornerRadius: 10,
+        padding: 12,
+        callbacks: {
+          title: items => items[0]?.raw?.orgName || '',
+          label: ctx => {
+            const point = ctx.raw;
+            return [
+              `Granted: $${point.x.toLocaleString()}`,
+              `New students: ${point.y.toLocaleString()}`,
+              `$ / new student: $${point.dollarsPerNewStudent.toLocaleString(undefined, { maximumFractionDigits: 0 })}`,
+              `New schools: ${point.newSchools}`
+            ];
+          }
+        }
+      }
+    },
+    scales: {
+      x: {
+        title: { display: true, text: 'Granted Funding ($)', color: '#5C5B7A', font: { weight: 600 } },
+        ticks: { callback: value => '$' + (value / 1000) + 'K', font: { weight: 500 } },
+        grid: { color: 'rgba(228,227,239,0.5)' }
+      },
+      y: {
+        title: { display: true, text: 'Estimated New Students Served', color: '#5C5B7A', font: { weight: 600 } },
+        ticks: { font: { weight: 500 } },
+        grid: { color: 'rgba(228,227,239,0.5)' }
       }
     }
   }
@@ -1164,7 +1243,7 @@ document.getElementById('orgFilters').addEventListener('click', e => {
 
 document.querySelectorAll('.chart-container').forEach(el => {
   const canvas = el.querySelector('canvas');
-  if (canvas && canvas.id === 'budgetChart') {
+  if (canvas && (canvas.id === 'budgetChart' || canvas.id === 'grantImpactChart')) {
     el.style.minHeight = '500px';
   }
 });
