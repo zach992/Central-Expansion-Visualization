@@ -660,6 +660,11 @@
         <canvas id="expansionChart"></canvas>
       </div>
       <div class="chart-container">
+        <canvas id="allocationSplitChart"></canvas>
+      </div>
+    </div>
+    <div class="chart-row">
+      <div class="chart-container">
         <canvas id="disciplineChart"></canvas>
       </div>
     </div>
@@ -825,6 +830,7 @@ const schools = [
 const typeLabels = { elem: 'Elementary', k8: 'K-8', middle: 'Middle', high: 'Senior High' };
 const typeClasses = { elem: 'type-elem', k8: 'type-k8', middle: 'type-middle', high: 'type-high' };
 const pillClasses = { music: 'pill-music', dance: 'pill-dance', theater: 'pill-theater', visual: 'pill-visual', poetry: 'pill-poetry', orchestra: 'pill-orchestra', choir: 'pill-choir', general: 'pill-general' };
+const sharedRectLegendLabels = { usePointStyle: true, pointStyle: 'rectRounded', padding: 20, font: { weight: 600 } };
 
 // ============ CHARTS ============
 
@@ -896,7 +902,7 @@ new Chart(document.getElementById('budgetChart'), {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
-      legend: { position: 'top', labels: { usePointStyle: true, pointStyle: 'rectRounded', padding: 20, font: { weight: 600 } } },
+      legend: { position: 'top', labels: sharedRectLegendLabels },
       title: { display: true, text: 'Requested vs. Granted Funding', font: { size: 15, weight: 700, family: "'Nunito', sans-serif" }, color: '#1A1A2E', padding: { bottom: 16 } },
       tooltip: {
         backgroundColor: '#2D2B7F',
@@ -975,7 +981,7 @@ new Chart(document.getElementById('expansionChart'), {
     responsive: true,
     plugins: {
       title: { display: true, text: 'Existing vs. New School Placements', font: { size: 15, weight: 700, family: "'Nunito', sans-serif" }, color: '#1A1A2E', padding: { bottom: 16 } },
-      legend: { labels: { usePointStyle: true, pointStyle: 'rectRounded', padding: 20, font: { weight: 600 } } },
+      legend: { labels: sharedRectLegendLabels },
       tooltip: {
         backgroundColor: '#2D2B7F',
         cornerRadius: 10,
@@ -988,6 +994,117 @@ new Chart(document.getElementById('expansionChart'), {
     scales: {
       x: { stacked: true, grid: { display: false }, ticks: { font: { weight: 700 } } },
       y: { stacked: true, ticks: { stepSize: 1, font: { weight: 500 } }, grid: { color: 'rgba(228,227,239,0.5)' } }
+    }
+  }
+});
+
+// Allocation Split Chart (new vs. existing school coverage)
+const orgBudgetBySchool = schools.reduce((acc, school) => {
+  school.programs.forEach(program => {
+    if (!acc[program.org]) acc[program.org] = {};
+    acc[program.org][school.name] = (acc[program.org][school.name] || 0) + (program.budget || 0);
+  });
+  return acc;
+}, {});
+
+const allocationSplit = expandOrgs.map(org => {
+  const mappedSchoolBudgets = Object.values(orgBudgetBySchool[org.abbr] || {});
+  const mappedTotal = mappedSchoolBudgets.reduce((sum, budget) => sum + budget, 0);
+  const baseBudget = mappedTotal > 0 ? mappedTotal : org.granted;
+
+  const hasExplicitSplit = typeof org.newAllocation === 'number' && typeof org.existingAllocation === 'number';
+  if (hasExplicitSplit) {
+    return {
+      ...org,
+      existingAllocation: org.existingAllocation,
+      newAllocation: org.newAllocation
+    };
+  }
+
+  if (org.newSchools === 0) {
+    return { ...org, existingAllocation: baseBudget, newAllocation: 0 };
+  }
+  if (org.existing === 0) {
+    return { ...org, existingAllocation: 0, newAllocation: baseBudget };
+  }
+
+  const totalCoverage = org.existing + org.newSchools;
+  const newAllocation = Math.round(baseBudget * (org.newSchools / totalCoverage));
+  return {
+    ...org,
+    newAllocation,
+    existingAllocation: Math.max(baseBudget - newAllocation, 0)
+  };
+});
+
+const allocationAnnotationPlugin = {
+  id: 'allocationAnnotation',
+  afterDatasetsDraw(chart) {
+    if (chart.canvas.id !== 'allocationSplitChart') return;
+    const { ctx } = chart;
+    const existingDataset = chart.data.datasets[0].data;
+    const newDataset = chart.data.datasets[1].data;
+    ctx.save();
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#5C5B7A';
+    ctx.font = "600 11px 'DM Sans', sans-serif";
+    chart.getDatasetMeta(1).data.forEach((bar, index) => {
+      const total = existingDataset[index] + newDataset[index];
+      if (!total) return;
+      const pctNew = Math.round((newDataset[index] / total) * 100);
+      ctx.fillText(`${pctNew}% new`, bar.x, bar.y - 8);
+    });
+    ctx.restore();
+  }
+};
+Chart.register(allocationAnnotationPlugin);
+
+new Chart(document.getElementById('allocationSplitChart'), {
+  type: 'bar',
+  data: {
+    labels: allocationSplit.map(o => o.abbr),
+    datasets: [
+      {
+        label: 'Existing School Allocation',
+        data: allocationSplit.map(o => o.existingAllocation),
+        backgroundColor: '#2D2B7F',
+        borderRadius: 6
+      },
+      {
+        label: 'New School Allocation',
+        data: allocationSplit.map(o => o.newAllocation),
+        backgroundColor: '#00B4A6',
+        borderRadius: 6
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      title: { display: true, text: 'Grant Allocation Split: Existing vs. New Coverage', font: { size: 15, weight: 700, family: "'Nunito', sans-serif" }, color: '#1A1A2E', padding: { bottom: 16 } },
+      legend: { labels: sharedRectLegendLabels },
+      tooltip: {
+        backgroundColor: '#2D2B7F',
+        cornerRadius: 10,
+        padding: 12,
+        callbacks: {
+          label: ctx => `${ctx.dataset.label}: $${Math.round(ctx.raw).toLocaleString()}`,
+          afterBody: items => {
+            const row = allocationSplit[items[0].dataIndex];
+            const total = row.existingAllocation + row.newAllocation;
+            const pctNew = total ? ((row.newAllocation / total) * 100).toFixed(1) : '0.0';
+            return [`${pctNew}% of grant going to new coverage`, row.name];
+          }
+        }
+      }
+    },
+    scales: {
+      x: { stacked: true, grid: { display: false }, ticks: { font: { weight: 700 } } },
+      y: {
+        stacked: true,
+        ticks: { callback: v => '$' + (v / 1000).toFixed(0) + 'K', font: { weight: 500 } },
+        grid: { color: 'rgba(228,227,239,0.5)' }
+      }
     }
   }
 });
