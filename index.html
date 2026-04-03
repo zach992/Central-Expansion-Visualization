@@ -261,6 +261,12 @@
     font-weight: 800;
     color: var(--text);
   }
+  .section-subtitle {
+    margin-top: -10px;
+    margin-bottom: 18px;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+  }
 
   /* ===== CHARTS ===== */
   .chart-container {
@@ -663,6 +669,10 @@
         <canvas id="disciplineChart"></canvas>
       </div>
     </div>
+    <div class="chart-container" style="margin-top:24px;min-height:460px;">
+      <div class="section-subtitle">Estimated new students reached (derived estimate from each organization's <strong>new schools</strong> count distributed across school types in the current school map; not direct student counts).</div>
+      <canvas id="allocationChart"></canvas>
+    </div>
   </div>
 
   <!-- School Program Grid -->
@@ -825,6 +835,11 @@ const schools = [
 const typeLabels = { elem: 'Elementary', k8: 'K-8', middle: 'Middle', high: 'Senior High' };
 const typeClasses = { elem: 'type-elem', k8: 'type-k8', middle: 'type-middle', high: 'type-high' };
 const pillClasses = { music: 'pill-music', dance: 'pill-dance', theater: 'pill-theater', visual: 'pill-visual', poetry: 'pill-poetry', orchestra: 'pill-orchestra', choir: 'pill-choir', general: 'pill-general' };
+const orgAliases = {
+  'AM': ['AM', 'Achieve Miami'],
+  'GoGo': ['GoGo', 'GOGO', 'Gogo'],
+  'EAL': ['EAL', 'EVO'],
+};
 
 // ============ CHARTS ============
 
@@ -1038,6 +1053,88 @@ new Chart(document.getElementById('disciplineChart'), {
   }
 });
 
+// New Student Allocation View (estimated)
+const studentsPerSchoolTypeEstimate = { elem: 420, k8: 650, middle: 700, high: 900 };
+const schoolTypesOrdered = ['elem', 'k8', 'middle', 'high'];
+const allocationByTypeDiscipline = {};
+
+function getMatchedSchoolsByOrg(abbr) {
+  const matchSet = orgAliases[abbr] || [abbr];
+  const matched = [];
+  schools.forEach(s => {
+    const hasProgram = s.programs.some(p => matchSet.includes(p.org));
+    if (hasProgram) matched.push(s);
+  });
+  return matched;
+}
+
+orgs.forEach(o => {
+  if (!o.newSchools) return;
+  const disciplineKey = (o.discipline || 'General').toLowerCase();
+  const matchedSchools = getMatchedSchoolsByOrg(o.abbr);
+  const typeCounts = schoolTypesOrdered.reduce((acc, t) => ({ ...acc, [t]: 0 }), {});
+
+  matchedSchools.forEach(s => { typeCounts[s.type] += 1; });
+  const totalTypeMatches = Object.values(typeCounts).reduce((sum, v) => sum + v, 0);
+
+  schoolTypesOrdered.forEach(type => {
+    if (!allocationByTypeDiscipline[type]) allocationByTypeDiscipline[type] = {};
+    const typeShare = totalTypeMatches ? typeCounts[type] / totalTypeMatches : 0;
+    const estimatedNewStudents = o.newSchools * typeShare * studentsPerSchoolTypeEstimate[type];
+    allocationByTypeDiscipline[type][disciplineKey] = (allocationByTypeDiscipline[type][disciplineKey] || 0) + estimatedNewStudents;
+  });
+});
+
+const allocationDisciplineKeys = Array.from(
+  new Set(
+    Object.values(allocationByTypeDiscipline).flatMap(byDiscipline => Object.keys(byDiscipline))
+  )
+).sort((a, b) => {
+  const totalA = schoolTypesOrdered.reduce((sum, type) => sum + (allocationByTypeDiscipline[type]?.[a] || 0), 0);
+  const totalB = schoolTypesOrdered.reduce((sum, type) => sum + (allocationByTypeDiscipline[type]?.[b] || 0), 0);
+  return totalB - totalA;
+});
+
+new Chart(document.getElementById('allocationChart'), {
+  type: 'bar',
+  data: {
+    labels: schoolTypesOrdered.map(t => typeLabels[t]),
+    datasets: allocationDisciplineKeys.map(d => ({
+      label: disciplineLabels[d] || (d.charAt(0).toUpperCase() + d.slice(1)),
+      data: schoolTypesOrdered.map(type => Math.round(allocationByTypeDiscipline[type]?.[d] || 0)),
+      backgroundColor: disciplineColors[d] || '#78909C',
+      borderRadius: 6,
+      borderSkipped: false
+    }))
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      title: { display: true, text: 'Where New Students Are Reached (Estimated)', font: { size: 16, weight: 700, family: "'Nunito', sans-serif" }, color: '#1A1A2E', padding: { bottom: 16 } },
+      legend: { position: 'bottom', labels: { usePointStyle: true, pointStyle: 'rectRounded', padding: 16, font: { weight: 600 } } },
+      tooltip: {
+        backgroundColor: '#2D2B7F',
+        cornerRadius: 10,
+        padding: 12,
+        callbacks: {
+          label: ctx => `${ctx.dataset.label}: ~${ctx.raw.toLocaleString()} estimated new students`
+        }
+      }
+    },
+    scales: {
+      x: { stacked: true, grid: { display: false }, ticks: { font: { weight: 700 } } },
+      y: {
+        stacked: true,
+        beginAtZero: true,
+        ticks: { callback: v => v.toLocaleString(), font: { weight: 500 } },
+        title: { display: true, text: 'Estimated new students' },
+        grid: { color: 'rgba(228,227,239,0.5)' }
+      }
+    }
+  }
+});
+
 // ============ SCHOOL GRID ============
 
 function buildGrid() {
@@ -1089,15 +1186,10 @@ buildGrid();
 // ============ ORG CARDS ============
 
 function getOrgSchools(abbr) {
-  const aliases = {
-    'AM': ['AM', 'Achieve Miami'],
-    'GoGo': ['GoGo', 'GOGO', 'Gogo'],
-    'EAL': ['EAL', 'EVO'],
-  };
   const found = [];
   schools.forEach(s => {
     s.programs.forEach(p => {
-      const matchSet = aliases[abbr] || [abbr];
+      const matchSet = orgAliases[abbr] || [abbr];
       if (matchSet.includes(p.org) && !found.includes(s.name)) found.push(s.name);
     });
   });
